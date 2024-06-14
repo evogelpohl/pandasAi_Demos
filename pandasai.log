@@ -11508,3 +11508,714 @@ result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Pe
 2024-06-14 11:13:54 [INFO] Executing Step 7: ResultValidation
 2024-06-14 11:13:54 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
 2024-06-14 11:13:54 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:40:04 [INFO] Question:  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+2024-06-14 11:40:04 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:40:04 [INFO] Prompt ID: da718a2d-5e92-48a4-9a01-ff7df07136ad
+2024-06-14 11:40:04 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:40:04 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:40:04 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:40:04 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:40:04 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-01-29,023XX N NATCHEZ AVE,OTHER RAILROAD PROPERTY / TRAIN DEPOT,True,False,423,25,45,16.0,02,2023,41.999868643,,,OTHER OFFENSE - LICENSE VIOLATION
+2023-12-28,084XX W LAWRENCE AVE,"CTA ""L"" TRAIN",False,False,1421,19,5,21.0,08A,2024,,-87.720711307,"{'latitude': '41.88320956', 'longitude': '-87.630156699', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - POSSESS - CANNABIS 30 GRAMS OR LESS
+2024-02-06,045XX S OAKENWALD AVE,,False,True,1925,10,8,,18,2024,41.754629714,-87.606702419,"{'latitude': '41.917469459', 'longitude': '-87.749825292', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - MANUFACTURE / DELIVER - PCP
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:40:04 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:40:09 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:40:09 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-01-29,023XX N NATCHEZ AVE,OTHER RAILROAD PROPERTY / TRAIN DEPOT,True,False,423,25,45,16.0,02,2023,41.999868643,,,OTHER OFFENSE - LICENSE VIOLATION
+2023-12-28,084XX W LAWRENCE AVE,"CTA ""L"" TRAIN",False,False,1421,19,5,21.0,08A,2024,,-87.720711307,"{'latitude': '41.88320956', 'longitude': '-87.630156699', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - POSSESS - CANNABIS 30 GRAMS OR LESS
+2024-02-06,045XX S OAKENWALD AVE,,False,True,1925,10,8,,18,2024,41.754629714,-87.606702419,"{'latitude': '41.917469459', 'longitude': '-87.749825292', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - MANUFACTURE / DELIVER - PCP
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:40:09 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Combine all dataframes in dfs list
+df = pd.concat(dfs)
+
+# Replace missing location_description with "Unknown"
+df['location_description'] = df['location_description'].fillna('Unknown')
+
+# Group by location_description and count the number of crimes
+top_crimes = df['crime'].groupby(df['location_description']).count().nlargest(10)
+
+# Plot the top 10 crimes by location_description
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a png file
+plt.savefig('top_crimes_by_location.png')
+
+# Declare result variable as a dictionary
+result = {"type": "plot", "value": "top_crimes_by_location.png"}
+            ```
+            
+2024-06-14 11:40:09 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:40:09 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:40:09 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:40:09 [INFO] 
+Code running:
+```
+df = pd.concat(dfs)
+df['location_description'] = df['location_description'].fillna('Unknown')
+top_crimes = df['crime'].groupby(df['location_description']).count().nlargest(10)
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:40:09 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:40:09 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:40:09 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:40:09 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:40:12 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:40:12 [INFO] Explanation:  I looked at the data we have and noticed that some location descriptions were missing. To make sure we include all locations, I filled in those missing values with "Unknown". Then, I grouped the crimes by location description and counted how many crimes occurred in each location. After that, I selected the top 10 locations with the most crimes. Finally, I created a bar chart to visualize this information, with the x-axis showing the location descriptions and the y-axis showing the number of crimes. I saved the chart as an image file for you to view later.
+                
+2024-06-14 11:42:53 [INFO] Question:  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+2024-06-14 11:42:53 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:42:53 [INFO] Prompt ID: a1af76b8-36ca-4b46-8da0-dd0468ca44a0
+2024-06-14 11:42:53 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:42:53 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:42:53 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:42:53 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:42:53 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:42:53 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:42:58 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:42:58 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:42:58 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Concatenate all dataframes in dfs list
+df = pd.concat(dfs)
+
+# Replace missing values in location_description with 'unknown'
+df['location_description'] = df['location_description'].fillna('unknown')
+
+# Group by location_description and count the number of crimes
+top_crimes = df.groupby('location_description').size().nlargest(10)
+
+# Plotting the top 10 crimes by location_description
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a png file
+plt.savefig('top_crimes_by_location.png')
+
+# Declare result variable as a plot
+result = {"type": "plot", "value": "top_crimes_by_location.png"}
+            ```
+            
+2024-06-14 11:42:58 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:42:58 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:42:58 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:42:58 [INFO] 
+Code running:
+```
+df = pd.concat(dfs)
+df['location_description'] = df['location_description'].fillna('unknown')
+top_crimes = df.groupby('location_description').size().nlargest(10)
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:42:58 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:42:58 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:42:58 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:42:58 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:43:00 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:43:00 [INFO] Explanation:  I looked at the data and noticed that some location descriptions were missing. To make sure we include all locations, I filled in the missing values with 'unknown'. Then, I grouped the data by location description and counted the number of crimes in each location. I selected the top 10 locations with the highest number of crimes and created a bar chart to visualize this information. Finally, I saved the chart as an image file for easy sharing.
+                
+2024-06-14 11:46:04 [INFO] Question:  Graph a trend line for all crimes by date, for the the current year only.   
+2024-06-14 11:46:04 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:46:04 [INFO] Prompt ID: 5d3d5522-3f93-4264-9fe3-52c3efa062c3
+2024-06-14 11:46:04 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:46:04 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:46:05 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:46:05 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:46:05 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the the current year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:46:05 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:46:09 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:46:09 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the the current year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:46:09 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Convert date column to datetime format
+dfs[0]['date'] = pd.to_datetime(dfs[0]['date'])
+
+# Filter data for the current year
+current_year = pd.Timestamp.now().year
+current_year_data = dfs[0][dfs[0]['date'].dt.year == current_year]
+
+# Group by date and count number of crimes
+crime_count_by_date = current_year_data.groupby('date').size()
+
+# Plot trend line for all crimes by date
+plt.figure(figsize=(12, 6))
+crime_count_by_date.plot()
+plt.title('Trend Line for Crimes by Date in Current Year')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a png file
+plt.savefig('crime_trend_line.png')
+
+# Declare result variable as a dictionary with type and value
+result = {"type": "plot", "value": "crime_trend_line.png"}
+            ```
+            
+2024-06-14 11:46:09 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:46:09 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:46:09 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:46:09 [INFO] 
+Code running:
+```
+dfs[0]['date'] = pd.to_datetime(dfs[0]['date'])
+current_year = pd.Timestamp.now().year
+current_year_data = dfs[0][dfs[0]['date'].dt.year == current_year]
+crime_count_by_date = current_year_data.groupby('date').size()
+plt.figure(figsize=(12, 6))
+crime_count_by_date.plot()
+plt.title('Trend Line for Crimes by Date in Current Year')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:46:09 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:46:09 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:46:09 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:46:09 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:46:19 [INFO] Question:  Graph a trend line for all crimes by date, for the previous year only.   
+2024-06-14 11:46:19 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:46:19 [INFO] Prompt ID: 3aa42620-366b-4a2b-8150-eb30f79feddb
+2024-06-14 11:46:19 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:46:19 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:46:19 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:46:19 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:46:19 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the previous year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:46:19 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:46:23 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:46:23 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-02-04,058XX N WESTERN AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,True,False,423,25,3,34.0,24,2024,,-87.689026494,"{'latitude': '41.739436957', 'longitude': '-87.722805078', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",NARCOTICS - ALTER / FORGE PRESCRIPTION
+2024-02-10,043XX W WILSON AVE,,False,True,2511,18,44,,02,2023,41.99767992,,,PUBLIC PEACE VIOLATION - PUBLIC DEMONSTRATION
+2024-03-07,097XX S STATE ST,CONVENIENCE STORE,True,True,921,17,20,25.0,04A,2023,41.86514333,-87.720624461,"{'latitude': '41.680692908', 'longitude': '-87.662446079', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",BATTERY - AGGRAVATED DOMESTIC BATTERY - HANDGUN
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the previous year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:46:23 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Filter data for the previous year
+current_year = pd.Timestamp.now().year
+previous_year_data = dfs[0][dfs[0]['year'] == current_year - 1]
+
+# Convert date column to datetime format
+previous_year_data['date'] = pd.to_datetime(previous_year_data['date'])
+
+# Group by date and count number of crimes
+crime_count_by_date = previous_year_data.groupby('date').size().reset_index(name='crime_count')
+
+# Plotting the trend line
+plt.figure(figsize=(12, 6))
+plt.plot(crime_count_by_date['date'], crime_count_by_date['crime_count'])
+plt.title('Trend of Crimes by Date for Previous Year')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as png
+plt.savefig('crime_trend_previous_year.png')
+
+# Declare result variable as a plot
+result = {"type": "plot", "value": "crime_trend_previous_year.png"}
+            ```
+            
+2024-06-14 11:46:23 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:46:23 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:46:23 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:46:23 [INFO] 
+Code running:
+```
+current_year = pd.Timestamp.now().year
+previous_year_data = dfs[0][dfs[0]['year'] == current_year - 1]
+previous_year_data['date'] = pd.to_datetime(previous_year_data['date'])
+crime_count_by_date = previous_year_data.groupby('date').size().reset_index(name='crime_count')
+plt.figure(figsize=(12, 6))
+plt.plot(crime_count_by_date['date'], crime_count_by_date['crime_count'])
+plt.title('Trend of Crimes by Date for Previous Year')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:46:23 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:46:23 [ERROR] Unable to extract filters for passed code
+2024-06-14 11:46:23 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:46:23 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:46:23 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:46:35 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:46:35 [INFO] Explanation:  I looked at the data for the previous year, grouped it by date, and counted the number of crimes that occurred on each date. Then, I plotted this information on a graph to show the trend of crimes by date for the previous year. Finally, I saved the graph as an image file for you to view.
+                
+2024-06-14 11:52:58 [INFO] Question:  Graph a trend line for all crimes by date, for the previous year only.   
+2024-06-14 11:52:58 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:52:58 [INFO] Prompt ID: 6e4c3e67-9a84-41d0-84e2-555c2daf99b9
+2024-06-14 11:52:58 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:52:59 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:52:59 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:52:59 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:52:59 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-03-04,062XX W 63RD PL,,False,False,232,1,15,22.0,11,2024,,-87.649203846,,CRIMINAL TRESPASS - TO AIRPORT
+2024-03-08,028XX S WALLACE ST,GROCERY FOOD STORE,True,True,2412,25,38,40.0,06,2024,41.753526795,,"{'latitude': '41.718941587', 'longitude': '-87.643144187', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ARSON - ATTEMPT ARSON
+2024-02-12,088XX S PAXTON AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,False,False,2512,8,33,,08B,2023,41.686869377,-87.708964601,"{'latitude': '42.004861544', 'longitude': '-87.665717926', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",STALKING - SIMPLE
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the previous year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:52:59 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:53:03 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:53:03 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-03-04,062XX W 63RD PL,,False,False,232,1,15,22.0,11,2024,,-87.649203846,,CRIMINAL TRESPASS - TO AIRPORT
+2024-03-08,028XX S WALLACE ST,GROCERY FOOD STORE,True,True,2412,25,38,40.0,06,2024,41.753526795,,"{'latitude': '41.718941587', 'longitude': '-87.643144187', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ARSON - ATTEMPT ARSON
+2024-02-12,088XX S PAXTON AVE,AIRPORT TERMINAL LOWER LEVEL - SECURE AREA,False,False,2512,8,33,,08B,2023,41.686869377,-87.708964601,"{'latitude': '42.004861544', 'longitude': '-87.665717926', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",STALKING - SIMPLE
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph a trend line for all crimes by date, for the previous year only.   
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:53:03 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Filter data for the previous year
+current_year = pd.Timestamp.now().year
+previous_year_data = pd.concat([df[df['year'] == current_year - 1] for df in dfs])
+
+# Convert 'date' column to datetime format
+previous_year_data['date'] = pd.to_datetime(previous_year_data['date'])
+
+# Group by date and count number of crimes
+crime_counts_by_date = previous_year_data.groupby('date').size()
+
+# Plot trend line for all crimes by date
+plt.figure(figsize=(12, 6))
+crime_counts_by_date.plot()
+plt.title('Trend Line for All Crimes by Date (Previous Year)')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a png file
+plt.savefig('crime_trend_line.png')
+
+# Declare result var
+result = {"type": "plot", "value": "crime_trend_line.png"}
+            ```
+            
+2024-06-14 11:53:03 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:53:03 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:53:03 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:53:03 [INFO] 
+Code running:
+```
+current_year = pd.Timestamp.now().year
+previous_year_data = pd.concat([df[df['year'] == current_year - 1] for df in dfs])
+previous_year_data['date'] = pd.to_datetime(previous_year_data['date'])
+crime_counts_by_date = previous_year_data.groupby('date').size()
+plt.figure(figsize=(12, 6))
+crime_counts_by_date.plot()
+plt.title('Trend Line for All Crimes by Date (Previous Year)')
+plt.xlabel('Date')
+plt.ylabel('Number of Crimes')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:53:03 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:53:03 [ERROR] Unable to extract filters for passed code
+2024-06-14 11:53:03 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:53:03 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:53:03 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:53:05 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:53:05 [INFO] Explanation:  I looked at the data from the previous year and grouped it by date to count the number of crimes that occurred each day. Then, I created a plot to show how the number of crimes changed over time. I added labels to the plot to make it easy to understand, and saved the plot as an image file for you to view later.
+                
