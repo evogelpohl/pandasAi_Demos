@@ -1,6 +1,7 @@
 .env
 /data/*.csv
+/data/*.zip
 .venv/
-/.ipynb_checkpoints
-.log
-data/Archive.zip
+*.log
+*.cache
+*.bak
