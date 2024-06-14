@@ -11007,3 +11007,504 @@ result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Pe
 2024-06-14 11:00:25 [INFO] Executing Step 7: ResultValidation
 2024-06-14 11:00:25 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
 2024-06-14 11:00:25 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:11:28 [INFO] Question: Plot as a line chart the daily trend of the crime: ‘BATTERY - DOMESTIC BATTERY SIMPLE’ for all days available.
+2024-06-14 11:11:28 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:11:28 [INFO] Prompt ID: 61be9802-994f-41c2-8958-cd4ea3c7dfb9
+2024-06-14 11:11:28 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:11:28 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:11:28 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:11:28 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:11:28 [INFO] Using prompt: dfs[0]:
+  name: Chicago Crimes
+  description: A dataset of all crimes committed in Chicago along with location, district,
+    ward and date.
+  type: pd.DataFrame
+  rows: 50000
+  columns: 15
+  schema:
+    fields:
+    - name: date
+      type: object
+      samples:
+      - '2099-03-14'
+      - '2099-03-14'
+      - '2099-03-14'
+      description: The Date when the incident occurred. Stored as text.
+    - name: block
+      type: object
+      samples:
+      - 033XX S KEDZIE AVE
+      - 093XX S VINCENNES AVE
+      - 117XX S HALSTED ST
+      description: Partially redacted address where the incident occurred, within
+        the same block as the actual address.
+    - name: location_description
+      type: object
+      samples:
+      - STREET
+      - STREET
+      - RESIDENCE
+      description: Description of the location where the incident occurred.
+    - name: arrest
+      type: bool
+      samples:
+      - false
+      - true
+      - false
+      description: Indicates whether an arrest was made.
+    - name: domestic
+      type: bool
+      samples:
+      - false
+      - false
+      - true
+      description: Indicates whether the incident was domestic-related as per the
+        Illinois Domestic Violence Act.
+    - name: beat
+      type: int64
+      samples:
+      - 1033
+      - 635
+      - 525
+      description: Police beat where the incident occurred, part of the smallest police
+        geographic area.
+    - name: district
+      type: int64
+      samples:
+      - 10
+      - 6
+      - 5
+      description: Police district where the incident occurred.
+    - name: ward
+      type: int64
+      samples:
+      - 22
+      - 21
+      - 34
+      description: City Council district (ward) where the incident occurred.
+    - name: community_area
+      type: float64
+      samples:
+      - 28.0
+      - 71.0
+      - 55.0
+      description: Indicates the community area where the incident occurred, with
+        Chicago having 77 community areas.
+    - name: fbi_code
+      type: object
+      samples:
+      - '07'
+      - 04A
+      - '14'
+      description: Crime classification as outlined in the FBI's National Incident-Based
+        Reporting System (NIBRS).
+    - name: year
+      type: int64
+      samples:
+      - 2024
+      - 2024
+      - 2024
+    - name: latitude
+      type: float64
+      samples:
+      - 41.827391
+      - 41.722932
+      - .nan
+      description: Latitude of the incident location, shifted for partial redaction
+        but on the same block.
+    - name: longitude
+      type: float64
+      samples:
+      - -87.705487
+      - -87.653322
+      - .nan
+      description: Longitude of the incident location, shifted for partial redaction
+        but on the same block.
+    - name: location
+      type: object
+      samples:
+      - latitude: '41.827391'
+        longitude: '-87.705487'
+      - latitude: '41.722932'
+        longitude: '-87.653322'
+      - null
+    - name: crime
+      type: object
+      samples:
+      - MOTOR VEHICLE THEFT - UNAUTHORIZED POSSESSION
+      - ASSAULT - AGGRAVATED - OTHER FIREARM
+      - CRIMINAL DAMAGE - TO VEHICLE
+      description: The crime committed, aka the incident.
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ Plot as a line chart the daily trend of the crime: ‘BATTERY - DOMESTIC BATTERY SIMPLE’ for all days available.
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:11:28 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:11:52 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:11:52 [INFO] Prompt used:
+            dfs[0]:
+  name: Chicago Crimes
+  description: A dataset of all crimes committed in Chicago along with location, district,
+    ward and date.
+  type: pd.DataFrame
+  rows: 50000
+  columns: 15
+  schema:
+    fields:
+    - name: date
+      type: object
+      samples:
+      - '2099-03-14'
+      - '2099-03-14'
+      - '2099-03-14'
+      description: The Date when the incident occurred. Stored as text.
+    - name: block
+      type: object
+      samples:
+      - 033XX S KEDZIE AVE
+      - 093XX S VINCENNES AVE
+      - 117XX S HALSTED ST
+      description: Partially redacted address where the incident occurred, within
+        the same block as the actual address.
+    - name: location_description
+      type: object
+      samples:
+      - STREET
+      - STREET
+      - RESIDENCE
+      description: Description of the location where the incident occurred.
+    - name: arrest
+      type: bool
+      samples:
+      - false
+      - true
+      - false
+      description: Indicates whether an arrest was made.
+    - name: domestic
+      type: bool
+      samples:
+      - false
+      - false
+      - true
+      description: Indicates whether the incident was domestic-related as per the
+        Illinois Domestic Violence Act.
+    - name: beat
+      type: int64
+      samples:
+      - 1033
+      - 635
+      - 525
+      description: Police beat where the incident occurred, part of the smallest police
+        geographic area.
+    - name: district
+      type: int64
+      samples:
+      - 10
+      - 6
+      - 5
+      description: Police district where the incident occurred.
+    - name: ward
+      type: int64
+      samples:
+      - 22
+      - 21
+      - 34
+      description: City Council district (ward) where the incident occurred.
+    - name: community_area
+      type: float64
+      samples:
+      - 28.0
+      - 71.0
+      - 55.0
+      description: Indicates the community area where the incident occurred, with
+        Chicago having 77 community areas.
+    - name: fbi_code
+      type: object
+      samples:
+      - '07'
+      - 04A
+      - '14'
+      description: Crime classification as outlined in the FBI's National Incident-Based
+        Reporting System (NIBRS).
+    - name: year
+      type: int64
+      samples:
+      - 2024
+      - 2024
+      - 2024
+    - name: latitude
+      type: float64
+      samples:
+      - 41.827391
+      - 41.722932
+      - .nan
+      description: Latitude of the incident location, shifted for partial redaction
+        but on the same block.
+    - name: longitude
+      type: float64
+      samples:
+      - -87.705487
+      - -87.653322
+      - .nan
+      description: Longitude of the incident location, shifted for partial redaction
+        but on the same block.
+    - name: location
+      type: object
+      samples:
+      - latitude: '41.827391'
+        longitude: '-87.705487'
+      - latitude: '41.722932'
+        longitude: '-87.653322'
+      - null
+    - name: crime
+      type: object
+      samples:
+      - MOTOR VEHICLE THEFT - UNAUTHORIZED POSSESSION
+      - ASSAULT - AGGRAVATED - OTHER FIREARM
+      - CRIMINAL DAMAGE - TO VEHICLE
+      description: The crime committed, aka the incident.
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ Plot as a line chart the daily trend of the crime: ‘BATTERY - DOMESTIC BATTERY SIMPLE’ for all days available.
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:11:52 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+# Filter the dataframe for 'BATTERY - DOMESTIC BATTERY SIMPLE'
+crime_df = dfs[0][dfs[0]['crime'] == 'BATTERY - DOMESTIC BATTERY SIMPLE']
+
+# Convert the 'date' column to datetime
+crime_df['date'] = pd.to_datetime(crime_df['date'])
+
+# Group by date and count the occurrences
+daily_trend = crime_df.groupby(crime_df['date'].dt.date).size()
+
+# Plot the daily trend as a line chart
+plt.figure(figsize=(12, 6))
+daily_trend.plot(kind='line', color='blue', linewidth=2)
+plt.title('Daily Trend of BATTERY - DOMESTIC BATTERY SIMPLE Crimes')
+plt.xlabel('Date')
+plt.ylabel('Number of Incidents')
+plt.grid(True)
+
+# Save the plot as a PNG file
+plt.savefig('daily_trend_battery_domestic_simple.png')
+
+# Declare result var:
+result = { "type": "plot", "value": "daily_trend_battery_domestic_simple.png" }
+            ```
+            
+2024-06-14 11:11:52 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:11:52 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:11:52 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:11:52 [INFO] 
+Code running:
+```
+crime_df = dfs[0][dfs[0]['crime'] == 'BATTERY - DOMESTIC BATTERY SIMPLE']
+crime_df['date'] = pd.to_datetime(crime_df['date'])
+daily_trend = crime_df.groupby(crime_df['date'].dt.date).size()
+plt.figure(figsize=(12, 6))
+daily_trend.plot(kind='line', color='blue', linewidth=2)
+plt.title('Daily Trend of BATTERY - DOMESTIC BATTERY SIMPLE Crimes')
+plt.xlabel('Date')
+plt.ylabel('Number of Incidents')
+plt.grid(True)
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:11:52 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:11:53 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:11:53 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:11:53 [INFO] Executing Step 8: ResultParsing
+2024-06-14 11:13:50 [INFO] Question:  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+2024-06-14 11:13:50 [INFO] Running PandasAI with openai LLM...
+2024-06-14 11:13:50 [INFO] Prompt ID: 5ac19c68-0cd7-461b-9471-cd7bf9fe38a8
+2024-06-14 11:13:50 [INFO] Executing Pipeline: GenerateChatPipeline
+2024-06-14 11:13:50 [INFO] Executing Step 0: ValidatePipelineInput
+2024-06-14 11:13:50 [INFO] Executing Step 1: CacheLookup
+2024-06-14 11:13:50 [INFO] Executing Step 2: PromptGeneration
+2024-06-14 11:13:50 [INFO] Using prompt: <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-03-09,018XX S CANALPORT AVE,,False,True,924,31,16,34.0,15,2023,41.702658099,,"{'latitude': '41.758346414', 'longitude': '-87.561510075', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ASSAULT - AGGRAVATED POLICE OFFICER - OTHER FIREARM
+2024-03-12,072XX S CLAREMONT AVE,CEMETARY,True,True,1423,2,38,,18,2023,41.655821115,-87.695158991,"{'latitude': '41.894448863', 'longitude': '-87.632670576', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ASSAULT - AGGRAVATED - KNIFE / CUTTING INSTRUMENT
+2024-01-17,018XX W JACKSON BLVD,SCHOOL - PUBLIC BUILDING,True,False,726,10,10,1.0,08B,2024,,-87.636265116,,"BATTERY - PROTECTED EMPLOYEE - HANDS, FISTS, FEET, NO / MINOR INJURY"
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2024-06-14 11:13:50 [INFO] Executing Step 3: CodeGenerator
+2024-06-14 11:13:54 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-06-14 11:13:54 [INFO] Prompt used:
+            <dataframe>
+dfs[0]:50000x15
+date,block,location_description,arrest,domestic,beat,district,ward,community_area,fbi_code,year,latitude,longitude,location,crime
+2024-03-09,018XX S CANALPORT AVE,,False,True,924,31,16,34.0,15,2023,41.702658099,,"{'latitude': '41.758346414', 'longitude': '-87.561510075', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ASSAULT - AGGRAVATED POLICE OFFICER - OTHER FIREARM
+2024-03-12,072XX S CLAREMONT AVE,CEMETARY,True,True,1423,2,38,,18,2023,41.655821115,-87.695158991,"{'latitude': '41.894448863', 'longitude': '-87.632670576', 'human_address': '{""address"": """", ""city"": """", ""state"": """", ""zip"": """"}'}",ASSAULT - AGGRAVATED - KNIFE / CUTTING INSTRUMENT
+2024-01-17,018XX W JACKSON BLVD,SCHOOL - PUBLIC BUILDING,True,False,726,10,10,1.0,08B,2024,,-87.636265116,,"BATTERY - PROTECTED EMPLOYEE - HANDS, FISTS, FEET, NO / MINOR INJURY"
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+  Graph the top 10 crime by location_description and if the location_description is missing in any way, then make it say unknown.  
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2024-06-14 11:13:54 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Concatenate all dataframes in dfs list
+df = pd.concat(dfs)
+
+# Replace missing values in location_description with "unknown"
+df['location_description'] = df['location_description'].fillna('unknown')
+
+# Group by location_description and count the number of crimes
+top_crimes = df['crime'].groupby(df['location_description']).count().nlargest(10)
+
+# Plot the top 10 crimes by location_description
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot as a png file
+plt.savefig('top_10_crimes_by_location.png')
+
+# Declare result variable as a dictionary
+result = {"type": "plot", "value": "top_10_crimes_by_location.png"}
+            ```
+            
+2024-06-14 11:13:54 [INFO] Executing Step 4: CachePopulation
+2024-06-14 11:13:54 [INFO] Executing Step 5: CodeCleaning
+2024-06-14 11:13:54 [INFO] Saving charts to /Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png
+2024-06-14 11:13:54 [INFO] 
+Code running:
+```
+df = pd.concat(dfs)
+df['location_description'] = df['location_description'].fillna('unknown')
+top_crimes = df['crime'].groupby(df['location_description']).count().nlargest(10)
+plt.figure(figsize=(12, 6))
+top_crimes.plot(kind='bar', color='skyblue')
+plt.title('Top 10 Crimes by Location Description')
+plt.xlabel('Location Description')
+plt.ylabel('Number of Crimes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+        ```
+2024-06-14 11:13:54 [INFO] Executing Step 6: CodeExecution
+2024-06-14 11:13:54 [INFO] Executing Step 7: ResultValidation
+2024-06-14 11:13:54 [INFO] Answer: {'type': 'plot', 'value': '/Users/eric/Library/CloudStorage/OneDrive-Personal/dev/pandasAi/exports/charts/temp_chart.png'}
+2024-06-14 11:13:54 [INFO] Executing Step 8: ResultParsing
