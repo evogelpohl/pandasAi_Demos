@@ -1,6 +1,6 @@
 # Chicago Crime Data Analysis
 
-This repository contains Jupyter Notebooks for analyzing Chicago crime data. The project involves retrieving crime data from online sources and performing various analyses to gain insights into crime patterns in Chicago.
+This repository contains Jupyter Notebooks for analyzing Chicago crime data using the PandasAI, a GPT powered data analysis tool. The project involves retrieving crime data from online sources and performing various analyses to gain insights into crime patterns in Chicago.
 
 ## Table of Contents
 
@@ -29,7 +29,6 @@ chicago-crime-data-analysis/
 │   └── --data--.csv (unzip from project zip file, change path to fit.)
 │
 ├── README.md
-└── requirements.txt
 
 - `notebooks/`: Contains Jupyter Notebooks for data retrieval and analysis.
 - `data/`: Directory for storing raw and processed data files.
@@ -52,10 +51,6 @@ To set up the project locally, follow these steps:
     source env/bin/activate  # On Windows, use `env\Scripts\activate`
     ```
 
-3. Install the required packages:
-    ```sh
-    pip install -r requirements.txt
-    ```
 
 ## Usage
 
@@ -66,9 +61,10 @@ To use the notebooks, follow these steps:
 2. Start Jupyter Notebook:
     ```sh
     jupyter notebook
-    ```
+ 
+3. Create a `.env` file and add the necessary keys (see [Environment Variables](#environment-variables) section).   ```
 
-3. Open and run the notebooks in the `notebooks/` directory to retrieve and analyze the Chicago crime data.
+4. Open and run the notebooks in the `notebooks/` directory to retrieve and analyze the Chicago crime data.
 
 ## Notebooks
 
