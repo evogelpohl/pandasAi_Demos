@@ -1,6 +1,5 @@
 .env
 /data/*.csv
-/data/*.zip
 .venv/
 *.log
 *.cache
