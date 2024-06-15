@@ -4,5 +4,4 @@
 *.log
 *.cache
 *.bakdata/Archive.zip
-data/Archive.zip
 .DS_Store
