@@ -33,7 +33,6 @@ chicago-crime-data-analysis/
 - `notebooks/`: Contains Jupyter Notebooks for data retrieval and analysis.
 - `data/`: Directory for storing raw and processed data files.
 - `README.md`: Project documentation.
-- `requirements.txt`: List of required Python packages.
 
 ## Installation
 
